@@ -3,18 +3,18 @@
 #include <string.h>
 #include "mm.h"
 #include "memlib.h"
-#define WSIZE 4             // 1 ì›Œë“œ í¬ê¸°
-#define DSIZE 8             // 2 ì›Œë“œ í¬ê¸°
-#define CHUNKSIZE (1 << 12) //ì „ì²´ ë‹¨ìœ„ ì‚¬ì´ì¦ˆ 2^12 (íŽ˜ì´ì§€ í¬ê¸°)
+#define WSIZE 4             // 1 ?›Œ?“œ ?¬ê¸?
+#define DSIZE 8             // 2 ?›Œ?“œ ?¬ê¸?
+#define CHUNKSIZE (1 << 12) //? „ì²? ?‹¨?œ„ ?‚¬?´ì¦? 2^12 (?Ž˜?´ì§? ?¬ê¸?)
 #define MAX(x, y) ((x) > (y) ? (x) : (y))
-#define PACK(size, alloc) ((size) | (alloc))       // | ì—°ì‚°ìžë¡œ, í¬ê¸°ì™€ í• ë‹¹ ë¹„íŠ¸ë¥¼ í•©ì³ì„œ header, footerì— ë„£ëŠ”ë‹¤.
-#define GET(p) (*(unsigned int *)(p))              //í¬ì¸í„°ì˜ ê°’ì„ ê°€ì ¸ì˜¨ë‹¤.
-#define PUT(p, val) (*(unsigned int *)(p) = (val)) // í•´ë‹¹ í¬ì¸í„°ì— ê°’ì„ ìž…ë ¥í•œë‹¤.
+#define PACK(size, alloc) ((size) | (alloc))       // | ?—°?‚°?žë¡?, ?¬ê¸°ì?? ?• ?‹¹ ë¹„íŠ¸ë¥? ?•©ì³ì„œ header, footer?— ?„£?Š”?‹¤.
+#define GET(p) (*(unsigned int *)(p))              //?¬?¸?„°?˜ ê°’ì„ ê°?? ¸?˜¨?‹¤.
+#define PUT(p, val) (*(unsigned int *)(p) = (val)) // ?•´?‹¹ ?¬?¸?„°?— ê°’ì„ ?ž…? ¥?•œ?‹¤.
 #define GET_SIZE(p) (GET(p) & ~0x7)
 #define GET_ALLOC(p) (GET(p) & 0x1)
-#define HDRP(bp) ((char *)(bp)-WSIZE) // í˜„ìž¬ í¬ì¸í„°ì—ì„œ 1ì›Œë“œ í¬ê¸° ì „ìœ¼ë¡œ ëŒì•„ê°€ë©´ í—¤ë“œ
+#define HDRP(bp) ((char *)(bp)-WSIZE) // ?˜„?ž¬ ?¬?¸?„°?—?„œ 1?›Œ?“œ ?¬ê¸? ? „?œ¼ë¡? ?Œ?•„ê°?ë©? ?—¤?“œ
 #define FTRP(bp) ((char *)(bp) + GET_SIZE(HDRP(bp)) - DSIZE)
-#define NEXT_BLKP(bp) ((char *)(bp) + GET_SIZE(((char *)(bp)-WSIZE))) //footerì—ì„œ sizeë¥¼ ê°€ì ¸ì˜¨ë‹¤.
+#define NEXT_BLKP(bp) ((char *)(bp) + GET_SIZE(((char *)(bp)-WSIZE))) //footer?—?„œ sizeë¥? ê°?? ¸?˜¨?‹¤.
 #define PREV_BLKP(bp) ((char *)(bp)-GET_SIZE(((char *)(bp)-DSIZE)))
 #define PREV_FREEBLKP(bp) ((char *)(bp))
 #define NEXT_FREEBLKP(bp) ((char *)(bp) + WSIZE)
@@ -43,11 +43,11 @@ team_t team = {
     "NULL",
     /* Second member's email address (leave blank if none) */
     "NULL"};
-//í”„ë¡¤ë¡œê·¸ í—¤ë” ë’¤ ì£¼ì†Œë¥¼ ê°€ë¦¬í‚¨ë‹¤.
+//?”„ë¡¤ë¡œê·? ?—¤?” ?’¤ ì£¼ì†Œë¥? ê°?ë¦¬í‚¨?‹¤.
 
 int mm_init(void)
 {
-    if ((heap_listp = mem_sbrk(24)) == (void *)-1) // ìµœì´ˆ ìµœì†Œ í¬ê¸° ì§€ì •
+    if ((heap_listp = mem_sbrk(24)) == (void *)-1) // ìµœì´ˆ ìµœì†Œ ?¬ê¸? ì§?? •
         return -1;
     PUT(heap_listp, 0);
     PUT(heap_listp + (1 * WSIZE), PACK(WSIZE * 4, 1));
@@ -58,9 +58,9 @@ int mm_init(void)
     heap_listp += (2 * WSIZE);
     head_list_ptr = heap_listp;
     printf("extend_heap_init\n");
-    if (extend_heap(CHUNKSIZE / DSIZE) == NULL) // íž™ í™•ìž¥ ì‹¤íŒ¨
+    if (extend_heap(CHUNKSIZE / DSIZE) == NULL) // ?ž™ ?™•?ž¥ ?‹¤?Œ¨
         return -1;
-    return 0; // íž™ í™•ìž¥ ì„±ê³µ
+    return 0; // ?ž™ ?™•?ž¥ ?„±ê³?
 }
 
 static void *extend_heap(size_t words)
@@ -73,11 +73,11 @@ static void *extend_heap(size_t words)
     printf("extend_heap_words : %d\n", words);
     printf("extend_heap_size : %d\n", size);
 
-    // ì‹ ê·œ ê³µê°„ ìƒì„±ì´ ì‹¤íŒ¨
+    // ?‹ ê·? ê³µê°„ ?ƒ?„±?´ ?‹¤?Œ¨
     if ((long)(bp = mem_sbrk(size)) == -1)
         return NULL;
 
-    // ì‹ ê·œ ê³µê°„ì´ ìƒì„±ì´ ëœ ê²½ìš°
+    // ?‹ ê·? ê³µê°„?´ ?ƒ?„±?´ ?œ ê²½ìš°
     PUT(HDRP(bp), PACK(size, 0));
     PUT(FTRP(bp), PACK(size, 0));
     PUT(HDRP(NEXT_BLKP(bp)), PACK(0, 1));
@@ -146,18 +146,18 @@ static void *place(void *bp, size_t asize)
 {
     free_delete(bp);
     size_t tmp_result = GET_SIZE(HDRP(bp)) - asize;
-    // ë‚¨ì€ ê³µê°„ì´ ìµœì†Œ ë¸”ë¡ í¬ê¸°ë³´ë‹¤ í° ê²½ìš°, ë‚¨ì€ ê³µê°„ì„ ë¶„í• í•´ ì¤€ë‹¤.
+    // ?‚¨??? ê³µê°„?´ ìµœì†Œ ë¸”ë¡ ?¬ê¸°ë³´?‹¤ ?° ê²½ìš°, ?‚¨??? ê³µê°„?„ ë¶„í• ?•´ ì¤??‹¤.
     if (tmp_result >= 2 * DSIZE)
     {
         PUT(HDRP(bp), PACK(asize, 1));
         PUT(FTRP(bp), PACK(asize, 1));
         bp = NEXT_BLKP(bp);
 
-        // ì±„ì›Œì§€ê³  ë‚¨ì€ ë¸”ëŸ­ì„ í• ë‹¹ë˜ì§€ ì•Šì€ ìƒíƒœë¡œ ì´ˆê¸°í™” ì‹œí‚¨ë‹¤.
+        // ì±„ì›Œì§?ê³? ?‚¨??? ë¸”ëŸ­?„ ?• ?‹¹?˜ì§? ?•Š??? ?ƒ?ƒœë¡? ì´ˆê¸°?™” ?‹œ?‚¨?‹¤.
         PUT(HDRP(bp), PACK(tmp_result, 0));
         PUT(FTRP(bp), PACK(tmp_result, 0));
 
-        // ê°€ìš© ìƒíƒœê°€ ë˜ë¯€ë¡œ, ê°€ìš©ë¦¬ìŠ¤íŠ¸ì— ì´ì–´ì¤€ë‹¤.
+        // ê°??š© ?ƒ?ƒœê°? ?˜ë¯?ë¡?, ê°??š©ë¦¬ìŠ¤?Š¸?— ?´?–´ì¤??‹¤.
         detach_free(bp);
     }
     else
@@ -191,7 +191,7 @@ static void *coalesce(void *bp)
         PUT(HDRP(PREV_BLKP(bp)), PACK(size, 0));
         bp = PREV_BLKP(bp);
     }
-    else // ì•ž ë’¤ ë¸”ë¡ì´ ëª¨ë‘ ë¯¸í• ë‹¹ì¼ ê²½ìš°,
+    else // ?•ž ?’¤ ë¸”ë¡?´ ëª¨ë‘ ë¯¸í• ?‹¹?¼ ê²½ìš°,
     {
         free_delete(PREV_BLKP(bp));
         free_delete(NEXT_BLKP(bp));
@@ -207,21 +207,21 @@ static void *coalesce(void *bp)
 void mm_free(void *bp)
 {
     size_t size = GET_SIZE(HDRP(bp));
-    PUT(HDRP(bp), PACK(size, 0)); // í• ë‹¹ ê°’ ë°˜í™˜í•˜ê¸°
+    PUT(HDRP(bp), PACK(size, 0)); // ?• ?‹¹ ê°? ë°˜í™˜?•˜ê¸?
     PUT(FTRP(bp), PACK(size, 0));
     coalesce(bp);
 }
 
 void free_delete(void *ptr)
 {
-    // 1. ê°€ìš© ë¦¬ìŠ¤íŠ¸ì˜ ë§¨ ì²˜ìŒì¸ ê²½ìš°
+    // 1. ê°??š© ë¦¬ìŠ¤?Š¸?˜ ë§? ì²˜ìŒ?¸ ê²½ìš°
     if (ptr == head_list_ptr)
     {
         PUT(PREV_FREEBLKP(GET(NEXT_FREEBLKP(ptr))), NULL);
         head_list_ptr = GET(NEXT_FREEBLKP(ptr));
     }
     else
-    // 2. ê°€ìš© ë¦¬ìŠ¤íŠ¸ì˜ ì¤‘ê°„ì¸ ê²½ìš°
+    // 2. ê°??š© ë¦¬ìŠ¤?Š¸?˜ ì¤‘ê°„?¸ ê²½ìš°
     {
         PUT(NEXT_FREEBLKP(GET(PREV_FREEBLKP(ptr))), GET(NEXT_FREEBLKP(ptr)));
         PUT(PREV_FREEBLKP(GET(NEXT_FREEBLKP(ptr))), GET(PREV_FREEBLKP(ptr)));
@@ -236,3 +236,17 @@ void detach_free(void *new_ptr)
     PUT(PREV_FREEBLKP(old_ptr), new_ptr);
     PUT(PREV_FREEBLKP(new_ptr), NULL);
 }
+
+/*
+
+explicit
+
+1. free delete¿¡¼­ ÇöÀç³ëµå Á¦¿ÜÇÏ°í ´Ù¸¥ °¡¿ë³ëµå ÀÌ¾îÁÖ´Â Æã¼ÇÀÎ°Å °°Àºµ¥ ³Ê¹« ±æ¾î¼­ °¡½Ã¼ºÀÌ ¶³¾îÁ®¼­ ¾Æ½¬¿îºÎºÐ
+
+2. detach_free¿¡¼­ head_list_ptrÀÌ null°ªÀ» °¡Áö°í ÀÖ´Â °æ¿ì¸¦ »ý°¢ ¾ÈÇØÁàµµ µÇ³ª?
+
+3. realloc ºÎºÐÀº ºÐ±â¸¦ ³ª´²¼­ ¾ÈÂÊ¿¡ ºó°ø°£ ÀÖÀ¸¸é ³ÖÀ¸¸é ´õ ÁÁ´Ù´Â°Å °°´Ù´Âµ¥ Àúµµ ±¸ÇöÀº ¾ÈÇØºÃ½À´Ï´Ù.
+
+´Ù¸¥ºÎºÐÀº °ÅÀÇ ºñ½ÁÇØ¼­ Àß Â§°Å °°°í, Àß µ¹¾Æ°£´Ù¸é ¹®Á¦´Â ¾øÀ»°Å °°½À´Ï´Ù.
+
+/*

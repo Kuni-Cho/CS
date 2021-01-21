@@ -27,7 +27,7 @@ team_t team = {
     "",
     /* Second member's email address (leave blank if none) */
     ""};
-static char *heap_listp; //í”„ë¡¤ë¡œê·¸ í—¤ë” ë’¤ ì£¼ì†Œë¥¼ ê°€ë¦¬í‚¨ë‹¤.
+static char *heap_listp; //?”„ë¡¤ë¡œê·? ?—¤?” ?’¤ ì£¼ì†Œë¥? ê°?ë¦¬í‚¨?‹¤.
 static char *tmp_listp;
 static void *coalesce(void *bp)
 {
@@ -168,3 +168,11 @@ void *mm_realloc(void *ptr, size_t size)
     mm_free(oldptr);
     return newptr;
 }
+
+/*
+
+Implicit
+
+Ã¥ ³»¿ë°ú °ÅÀÇ ºñ½ÁÇÑ°Å °°¾Æ¼­ Àß Â§°Å °°½À´Ï´Ù.
+
+/*
